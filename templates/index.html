@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="[[ url_for('static', filename='js/axios.min.js') ]]"></script>
+    <script src="[[ url_for('static', filename='js/lodash.min.js') ]]"></script>
+    <script src="[[ url_for('static', filename='js/vue.js') ]]"></script>
+    <script src="[[ url_for('static', filename='js/test.js') ]]"></script>
+    <link href="[[ url_for('static', filename='css/style.css') ]]" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="[[ url_for('static', filename='img/vue.ico') ]]" type="image/x-icon" />
+    <title>Vue 示例</title>
+</head>
+
+<body>
+    <p class="h1"># 模板语法</p>
+    <!-- 模板语法 -->
+    <div id="app">
+        <hr>
+
+        <p class="h2">## 显示data内容</p>
+        <p class="url">{{ foo }}</p>
+
+        <p class="h2">## 绑定事件</p>
+        <!-- ""中使用{}可以对CSS进行操作 -->
+        <p class="content">修改foo的值</p>
+        <label for="foo">foo单选框</label>
+        <input name="foo" type="radio" v-model="foo" value="bar">
+        <input name="foo" type="radio" v-model="foo" value="baz">
+
+        <hr>
+
+        <!-- 使用v-html输出真正的 HTML -->
+        <p class="h2">## 使用v-html输出真正的 HTML</p>
+        <p class="content">Using mustaches: {{ raw }} </p>
+        <span v-html="raw"></span>
+
+        <hr>
+
+        <p class="h2">## v-if 指令将根据表达式 seen 的值的真假来插入/移除</p>
+        <!--v-if 指令将根据表达式 seen 的值的真假来插入/移除 <p> 元素-->
+        <label for="if-test" class="content">单击选项框切换状态</label>
+        <input type="checkbox" name="if-test" v-model="iftest">
+        <p v-if="iftest">你现在看到我了</p>
+
+        <hr>
+
+        <p class="h2">## 一些指令能够接收一个“参数”，在指令名称之后以冒号表示</p>
+        <!-- 一些指令能够接收一个“参数”，在指令名称之后以冒号表示 -->
+        <a v-bind:href="url">link</a>
+
+        <hr>
+
+        <p class="h2">## v-bind缩写</p>
+        <!-- v-bind缩写 -->
+        <p><a :href="url">v-bind缩写</a></p>
+
+        <hr>
+
+        <p class="h2">## v-on缩写</p>
+        <!-- v-on缩写 -->
+        <a @click="" class="content">v-on缩写</a>
+
+        <hr>
+    </div>
+
+    <p class="h1"># 计算属性和侦听器</p>
+
+    <hr>
+
+    <!-- 计算属性和侦听器 -->
+    <!-- 计算属性的一个好处是，只有当观察值变化是才调用相应方法 -->
+    <p2 class="h2">## 计算属性computed的使用</p2>
+    <div id="example">
+        <!-- 计算属性computed的使用 -->
+        <p class="content">Original message: "<span class="property">{{ message }}</span> "</p>
+        <!-- 翻转字符串 -->
+        <p class="content">反转字符串</p>
+        <p class="content">Compted reversed message: "<span class="property">{{ reversedMessage }} </span>"</p>
+
+        <hr>
+
+        <!-- 输出属性 -->
+        <p class="h3">### computed的getter方法输出属性值</p>
+        <p>{{ fullName }}</p>
+        <!-- 通过computed的setter方法设置属性值 -->
+        <p class="h3">### computed的setter方法设置属性值</p>
+        {{ fullName = 'qi qifeng' }}
+
+        <hr>
+    </div>
+
+    <p class="h2">## 侦听器示例</p>
+    <div id="watch-example">
+        <p>
+            Ask a yes/no question:
+            <input type="text" v-model="question">
+        </p>
+        <p>{{ answer }}</p>
+    </div>
+
+    <hr>
+
+    <p class="h1"># Class 与 Style 绑定</p>
+    <div id="chapter3">
+        <hr>
+        <p class="h2">## 动态切换class</p>
+        <label for="burst">改变样式</label>
+        <input type="checkbox" name="burst" v-model="isActive">
+        <div :class="{ active: isActive }">突然出现</div>
+        <hr>
+    </div>
+
+
+
+    <p class="h1"># 列表渲染</p>
+
+    <hr>
+    <p class="h2">## 简单的 todo 列表的完整例子</p>
+    <div id="todo-list-example">
+        <form @submit.prevent="addNewTodo">
+            <label for="new-todo"></label>
+            <input type="text" v-model="newTodoText" id="new-todo" placeholder="E.g. Feed the cat">
+            <button>Add</button>
+        </form>
+        <ul>
+            <li is="todo-item" v-for="(todo, index) in todos" v-bind:key="todo.id" v-bind:title="todo.title"
+                v-on:remove="todos.splice(index, 1)"></li>
+        </ul>
+        <hr>
+    </div>
+
+
+    <p class="h2">## v-for 与 v-if的综合使用</p>
+    <div id="ifAndFor">
+        <ul>
+            <li v-for="n in numbers" v-if="even(n)">{{ n }} </li>
+        </ul>
+    </div>
+    <hr>
+    <p class="h2">## 屎化的乌蝇哥</p>
+    <div id="hitGame">
+        <img src="[[ url_for('static', filename='img/laugh.jpg') ]]" class="gameHit" v-if="health != 100">
+        <img src="[[ url_for('static', filename='img/cry.jpg') ]]" class="gameHit" v-else>
+        <div>屎化条</div>
+        <div class="container">
+            <div class="hit" :style="{ 'width' : health + '%' }"></div>
+            <button @click="healthInecrease" v-if="health != 100">打一下</button>
+            <button @click="restart" v-else>重新开始</button>
+        </div>
+    </div>
+
+    <hr>
+
+    <p class="h2">## 输入回车post信息</p>
+    <div id="enterExample">
+        <input type="text" v-model="question" @keyup.enter="submit">
+        <p>{{ this.answer }}</p>
+    </div>
+
+    <hr>
+
+    <p class="h1"># 组件基础</p>
+
+    <hr>
+
+    <p class="h2">## 基本示例</p>
+    <!-- 注意当点击按钮时，每个组件都会各自独立维护它的 count。因为你每用
+    一次组件，就会有一个它的新实例被创建。 -->
+    <!-- 一个组件的 data 选项必须是一个函数，因此每个实例可以维护一份被返
+    回对象的独立的拷贝 -->
+    <p class="content">点击按钮触发事件</p>
+    <div id="components-demo">
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+    </div>
+
+    <hr>
+
+    <p class="h2">## 通过 Prop 向子组件传递数据</p>
+
+    <hr>
+
+    <!-- Prop 是你可以在组件上注册的一些自定义特性。当一个值传递给一个 prop 特性
+    的时候，它就变成了那个组件实例的一个属性 -->
+    <div id="h3props">
+        <!-- 这里有两种传值方法 -->
+        <!-- 第一种，直接在属性中给 -->
+        <p class="h3">### 传值方法一：直接在属性中给出</p>
+
+
+        <blog-post title="My journey with Vue"></blog-post>
+        <blog-post title="Blogging with Vue"></blog-post>
+        <blog-post title="Why Vue is so fun"></blog-post>
+        <!-- 第二种，通过for遍历 -->
+
+        <hr>
+
+        <p class="h3">### 传值方法二：通过for遍历</p>
+        <blog-post v-for="post in posts" v-bind:key="post.id" v-bind:title="post.title"></blog-post>
+    </div>
+    <hr>
+
+    <p class="h3">### 传值方法三：通过对象传递</p>
+    <div id="h3PropPro">
+        <div :style="{fontSize: postFontSize + 'em' }">
+            <blog-post-pro v-for="post in posts" v-bind:key="post.id" v-bind:post="post"
+                v-on:enlarge-text="postFontSize += 0.1"></blog-post-pro>
+        </div>
+    </div>
+
+    <hr>
+
+</body>
+<script src="[[ url_for('static', filename='js/test.js') ]]">
+</script>
+
+</html>
